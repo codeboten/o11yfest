@@ -46,6 +46,21 @@ services:
       - opentelemetry-collector
     ports:
       - 5001:5001
+  hotrod:
+    image: jaegertracing/example-hotrod:latest
+    container_name: hotrod
+    environment:
+      - JAEGER_AGENT_HOST=jaeger
+      - JAEGER_AGENT_PORT=6831
+    networks:
+      - o11yfest
+    depends_on:
+      - opentelemetry-collector
+    ports:
+      - 8080:8080
+      - 8081:8081
+      - 8082:8082
+      - 8083:8083
 
   #####################################
   # OpenTelemetry Collector           #
