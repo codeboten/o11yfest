@@ -66,7 +66,7 @@ services:
   # OpenTelemetry Collector           #
   #####################################
   opentelemetry-collector:
-    image: codeboten/collector:0.45.0
+    image: otel/opentelemetry-collector-contrib:0.47.0
     container_name: opentelemetry-collector
     volumes:
       - ./config/collector/config.yml/:/etc/opentelemetry-collector.yml
@@ -78,7 +78,10 @@ services:
     ports:
       - 4317:4317
       - 13133:13133
+      - 8888:8888
       - 8889:8889
+    env_file:
+      - .env
 
   #####################################
   # Backends                          #
@@ -129,7 +132,8 @@ services:
       - o11yfest
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
-      - GF_AUTH_ORG_ROLE=viewer
+      - GF_AUTH_ORG_ROLE=Editor
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_AUTH_DISABLE_LOGIN_FORM=true
       - GF_USERS_DEFAULT_THEME=light
 

@@ -17,6 +17,3 @@ Compose environment:
 git clone https://github.com/codeboten/o11yfest && cd o11yfest
 docker compose up -d
 ```
-
-
-
