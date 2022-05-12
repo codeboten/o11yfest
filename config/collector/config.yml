@@ -2,22 +2,83 @@ receivers:
   otlp:
     protocols:
       grpc:
+  # jaeger:
+  #   protocols:
+  #     thrift_compact:
+  # prometheus:
+  #   config:
+  #     scrape_configs:
+        # - job_name: 'hotrod'
+        #   scrape_interval: 5s
+        #   static_configs:
+        # #     - targets: ['hotrod:8083']
+        # - job_name: 'otelcol'
+        #   scrape_interval: 5s
+        #   static_configs:
+        #     - targets: ['localhost:8888']
 
 processors:
+  # batch:
+  #   timeout: 2s
+  # memory_limiter:
+  #   check_interval: 5s
+  #   limit_mib: 1
+  #   spike_limit_mib: 0.5
+  # resourcedetection/env:
+  #   detectors: ["env"]
+  #   timeout: 2s
+  #   override: true
+  # metricstransform:
+  #   transforms:
+  #     - include: request_count
+  #       match_type: strict
+  #       action: update
+  #       new_name: http_request_count
 
 exporters:
   logging:
+  # zipkin:
+  #   endpoint: "http://zipkin:9411/api/v2/spans"
+  #   tls:
+  #     insecure: true
+  # jaeger:
+  #   endpoint: jaeger:14250
+  #   tls:
+  #     insecure: true
+  # prometheus:
+  #   endpoint: ":8889"
+  #   namespace: o11yfest
+  #   send_timestamps: true
+  #   resource_to_telemetry_conversion:
+  #     enabled: true
+  # loki:
+  #   endpoint: http://loki:3100/loki/api/v1/push
+  #   labels:
+  #     resource:
+  #       service.name: "job"
+  # otlp/lightstep:
+  #   endpoint: ingest.lightstep.com:443
+  #   headers: 
+  #     - lightstep-access-token: ${LS_ACCESS_TOKEN}
+
+# extensions:
+#   health_check:
 
 service:
-  telemetry:
+  # extensions: [health_check]
+  # telemetry:
+  #   metrics:
   pipelines:
     traces:
       receivers: [otlp]
+      # processors: [batch]
       exporters: [logging]
     metrics:
       receivers: [otlp]
+      # processors: [batch]
       exporters: [logging]
     logs:
       receivers: [otlp]
+      # processors: [batch]
       exporters: [logging]
   
